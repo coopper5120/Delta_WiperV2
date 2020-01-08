@@ -36,6 +36,14 @@ void TRAJECTORY_Init()
 	TRAJECTORY.theta1 = 0.0;
 	TRAJECTORY.theta2 = 0.0;
 
+	TRAJECTORY.theta0Next = 0.0;
+	TRAJECTORY.theta1Next = 0.0;
+	TRAJECTORY.theta2Next = 0.0;
+
+	TRAJECTORY.theta0Velocity = 0.0;
+	TRAJECTORY.theta1Velocity = 0.0;
+	TRAJECTORY.theta2Velocity = 0.0;
+
 	TRAJECTORY.busy = false;
 }
 
@@ -74,7 +82,7 @@ TRAJECTORY->time = TIMER_GetTime(&TIMER_0) - TRAJECTORY->timeStart;
 
 if(TRAJECTORY->busy)
 {
-	if(TRAJECTORY->time > TRAJECTORY->totalTime)
+	if(TRAJECTORY->time > (TRAJECTORY->totalTime -dt))
 	{
 		TRAJECTORY->busy = false;
 		return false;
@@ -85,16 +93,25 @@ if(TRAJECTORY->busy)
 		TRAJECTORY->yCurrent = TRAJECTORY->yStart + TRAJECTORY->yLength * (TRAJECTORY->time/TRAJECTORY->totalTime);
 		TRAJECTORY->zCurrent = TRAJECTORY->zStart + TRAJECTORY->zLength * (TRAJECTORY->time/TRAJECTORY->totalTime);
 
-		if(delta_calcInverse(TRAJECTORY->xCurrent, TRAJECTORY->yCurrent, TRAJECTORY->zCurrent, &TRAJECTORY->theta0, &TRAJECTORY->theta1, &TRAJECTORY->theta2) == 0)
-		{
-			TRAJECTORY->minustheta0 = -TRAJECTORY->theta0;
-			TRAJECTORY->minustheta1 = -TRAJECTORY->theta1;
-			TRAJECTORY->minustheta2 = -TRAJECTORY->theta2;
+		TRAJECTORY->xNext = TRAJECTORY->xStart + TRAJECTORY->xLength * ((TRAJECTORY->time + dt)/TRAJECTORY->totalTime);
+		TRAJECTORY->yNext = TRAJECTORY->yStart + TRAJECTORY->yLength * ((TRAJECTORY->time + dt)/TRAJECTORY->totalTime);
+		TRAJECTORY->zNext = TRAJECTORY->zStart + TRAJECTORY->zLength * ((TRAJECTORY->time + dt)/TRAJECTORY->totalTime);
 
+		if(delta_calcInverse(TRAJECTORY->xCurrent, TRAJECTORY->yCurrent, TRAJECTORY->zCurrent, &TRAJECTORY->theta0, &TRAJECTORY->theta1, &TRAJECTORY->theta2) == 0
+		&& delta_calcInverse(TRAJECTORY->xNext, TRAJECTORY->yNext, TRAJECTORY->zNext, &TRAJECTORY->theta0Next, &TRAJECTORY->theta1Next, &TRAJECTORY->theta2Next) == 0)
+		{
+
+			TRAJECTORY->theta0Velocity =(TRAJECTORY->theta0Next - TRAJECTORY->theta0)/dt;
+			TRAJECTORY->theta1Velocity =(TRAJECTORY->theta1Next - TRAJECTORY->theta1)/dt;
+			TRAJECTORY->theta2Velocity =(TRAJECTORY->theta2Next - TRAJECTORY->theta2)/dt;
 
 			PID_SetRequired(&PID_0_Pos, -TRAJECTORY->theta0);
 			PID_SetRequired(&PID_1_Pos, -TRAJECTORY->theta1);
 			PID_SetRequired(&PID_2_Pos, -TRAJECTORY->theta2);
+
+//			PID_SetRequired(&PID_0_Speed, -TRAJECTORY->theta0Velocity);
+//			PID_SetRequired(&PID_1_Speed, -TRAJECTORY->theta1Velocity);
+//			PID_SetRequired(&PID_2_Speed, -TRAJECTORY->theta2Velocity);
 
 			return true;
 		}

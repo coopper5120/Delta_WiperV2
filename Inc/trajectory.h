@@ -9,6 +9,10 @@ typedef struct
 	float yCurrent;
 	float zCurrent;
 
+	float xNext;
+	float yNext;
+	float zNext;
+
 	float xTarget;
 	float yTarget;
 	float zTarget;
@@ -32,9 +36,13 @@ typedef struct
 	float theta1;
 	float theta2;
 
-	float minustheta0;
-	float minustheta1;
-	float minustheta2;
+	float theta0Next;
+	float theta1Next;
+	float theta2Next;
+
+	float theta0Velocity;
+	float theta1Velocity;
+	float theta2Velocity;
 
 	bool busy;
 

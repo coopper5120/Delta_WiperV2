@@ -220,7 +220,9 @@ void EXTI0_IRQHandler(void)
   /* USER CODE BEGIN EXTI0_IRQn 0 */
 	ENCODER_SetZero(&ENCODER_1);
 	MOTOR_SetRequiredSpeed(&MOTOR_1,0);
-	PID_Enable(&PID_0_Pos);
+	PID_Enable(&PID_1_Pos);
+	PID_Disable(&PID_1_Speed);
+
 
   /* USER CODE END EXTI0_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
@@ -237,7 +239,8 @@ void EXTI1_IRQHandler(void)
   /* USER CODE BEGIN EXTI1_IRQn 0 */
 	ENCODER_SetZero(&ENCODER_0);
 	MOTOR_SetRequiredSpeed(&MOTOR_0,0);
-	PID_Enable(&PID_1_Pos);
+	PID_Enable(&PID_0_Pos);
+	PID_Disable(&PID_0_Speed);
 
   /* USER CODE END EXTI1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
@@ -255,6 +258,7 @@ void EXTI9_5_IRQHandler(void)
 	ENCODER_SetZero(&ENCODER_2);
 	MOTOR_SetRequiredSpeed(&MOTOR_2,0);
 	PID_Enable(&PID_2_Pos);
+	PID_Disable(&PID_2_Speed);
 
   /* USER CODE END EXTI9_5_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_5);
@@ -367,7 +371,7 @@ void TIM1_CC_IRQHandler(void)
 			if(PID_IsEnabled(&PID_1_Pos)) MOTOR_SetRequiredSpeed(&MOTOR_1,PID_Calc(&PID_1_Pos,ENCODER_GetAbsoluteAngle(&ENCODER_1)));
 			if(PID_IsEnabled(&PID_2_Pos)) MOTOR_SetRequiredSpeed(&MOTOR_2,PID_Calc(&PID_2_Pos,ENCODER_GetAbsoluteAngle(&ENCODER_2)));
 		}
-		else if(PID_IsEnabled(&PID_0_Speed) && PID_IsEnabled(&PID_1_Speed) && PID_IsEnabled(&PID_2_Speed))
+		else
 		{
 			if(PID_IsEnabled(&PID_0_Speed)) MOTOR_SetRequiredSpeed(&MOTOR_0,PID_Calc(&PID_0_Speed,	ENCODER_GetAbsoluteAngularVelocity(&ENCODER_0)));
 		    if(PID_IsEnabled(&PID_1_Speed)) MOTOR_SetRequiredSpeed(&MOTOR_1,PID_Calc(&PID_1_Speed,	ENCODER_GetAbsoluteAngularVelocity(&ENCODER_1)));
