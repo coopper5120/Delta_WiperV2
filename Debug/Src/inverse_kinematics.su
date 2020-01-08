@@ -1,0 +1,3 @@
+inverse_kinematics.c:22:6:delta_calcAngleYZ	56	static
+inverse_kinematics.c:44:6:delta_calcForward	128	static
+inverse_kinematics.c:95:6:delta_calcInverse	48	static

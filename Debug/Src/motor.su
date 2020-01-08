@@ -1,0 +1,4 @@
+stm32f1xx_ll_tim.h:1323:26:LL_TIM_GetAutoReload	16	static
+motor.c:9:6:MOTOR_SetRequiredSpeed	16	static
+motor.c:43:6:MOTOR_SetCurrentSpeed	32	static
+motor.c:81:6:MOTOR_Init	4	static

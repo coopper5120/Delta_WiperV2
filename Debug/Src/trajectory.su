@@ -1,0 +1,5 @@
+trajectory.c:10:6:TRAJECTORY_Init	4	static
+trajectory.c:42:6:TRAJECTORY_SetTrajectory	32	static
+trajectory.c:59:6:TRAJECTORY_StartTrajectory	16	static
+trajectory.c:65:6:TRAJECTORY_IsBusy	16	static
+trajectory.c:70:6:TRAJECTORY_MakeStep	32	static

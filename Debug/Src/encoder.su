@@ -1,0 +1,8 @@
+stm32f1xx_ll_tim.h:1247:22:LL_TIM_SetCounter	16	static
+stm32f1xx_ll_tim.h:1258:26:LL_TIM_GetCounter	16	static
+encoder.c:7:6:ENCODER_Init	8	static
+encoder.c:32:6:ENCODER_SetZero	16	static
+encoder.c:38:7:ENCODER_GetAbsoluteAngle	24	static
+encoder.c:44:6:ENCODER_UpdateAbsoluteAngle	16	static
+encoder.c:49:7:ENCODER_UpdateAbsoluteAngularVelocity	24	static
+encoder.c:54:7:ENCODER_GetAbsoluteAngularVelocity	16	static

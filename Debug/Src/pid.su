@@ -1,0 +1,6 @@
+pid.c:12:9:PID_Calc	24	static
+pid.c:28:6:PID_init	4	static
+pid.c:94:6:PID_Enable	16	static
+pid.c:99:6:PID_Disable	16	static
+pid.c:104:6:PID_IsEnabled	16	static
+pid.c:109:6:PID_SetRequired	16	static
